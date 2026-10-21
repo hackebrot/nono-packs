@@ -8,7 +8,6 @@
   },
   "groups": {
     "include": [
-      { "name": "claude_code_macos", "when": "macos" },
       { "name": "claude_code_linux", "when": "linux" },
       { "name": "user_caches_macos", "when": "macos" },
       { "name": "claude_cache_linux", "when": "linux" },
@@ -33,20 +32,18 @@
       "$HOME/.local/state/claude/locks",
       "$HOME/.cache/claude",
       "$NONO_CONFIG/profile-drafts",
-      "/tmp/claude-$UID",
-      { "path": "$HOME/Library/Keychains", "when": "macos" }
+      "/tmp/claude-$UID"
     ],
     "read": [
       "$NONO_PACKAGES",
-      "$NONO_CONFIG/profiles"
+      "$NONO_CONFIG/profiles",
+      { "path": "$HOME/.local/share/claude", "when": "macos" },
+      { "path": "$HOME/Applications/Claude Code URL Handler.app", "when": "macos" }
     ],
     "allow_file": [
       "$HOME/.claude.json",
       "$HOME/.claude.json.lock",
       "$HOME/.claude.lock"
-    ],
-    "bypass_protection": [
-      { "path": "$HOME/Library/Keychains", "when": "macos" }
     ],
     "unix_socket_dir_bind": [
       { "path": "$XDG_RUNTIME_DIR/cc-socks", "when": "linux" }
