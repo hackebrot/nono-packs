@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "name": "claude-no-keychain",
+  "version": "0.1.0",
+  "description": "nono profile for Claude Code without macOS keychain access, based on the nolabs-ai/claude profile.",
+  "license": "Apache-2.0",
+  "platforms": [
+    "macos"
+  ],
+  "min_nono_version": "0.63.0",
+  "artifacts": [
+    {
+      "type": "profile",
+      "path": "policy.json",
+      "install_as": "claude-no-keychain"
+    },
+    {
+      "type": "plugin",
+      "path": "README.md"
+    },
+    {
+      "type": "plugin",
+      "path": "LICENSE"
+    },
+    {
+      "type": "plugin",
+      "path": "bin/ensure-dirs.sh"
+    }
+  ]
+}
