@@ -1,0 +1,117 @@
+{
+  "extends": "default",
+  "meta": {
+    "name": "claude-no-keychain",
+    "version": "0.1.0",
+    "description": "Claude Code CLI agent (no macOS keychain access)",
+    "author": "hackebrot"
+  },
+  "groups": {
+    "include": [
+      {
+        "name": "claude_code_linux",
+        "when": "linux"
+      },
+      {
+        "name": "user_caches_macos",
+        "when": "macos"
+      },
+      {
+        "name": "claude_cache_linux",
+        "when": "linux"
+      },
+      "node_runtime",
+      "rust_runtime",
+      "python_runtime",
+      {
+        "name": "vscode_macos",
+        "when": "macos"
+      },
+      {
+        "name": "vscode_linux",
+        "when": "linux"
+      },
+      {
+        "name": "linux_sysfs_read",
+        "when": "linux"
+      },
+      "nix_runtime",
+      "git_config",
+      "unlink_protection"
+    ]
+  },
+  "security": {
+    "signal_mode": "isolated",
+    "capability_elevation": false
+  },
+  "filesystem": {
+    "allow": [
+      "$HOME/.claude",
+      "$HOME/.local/state/claude/locks",
+      "$HOME/.cache/claude",
+      "$NONO_CONFIG/profile-drafts",
+      "/tmp/claude-$UID"
+    ],
+    "read": [
+      "$NONO_PACKAGES",
+      "$NONO_CONFIG/profiles",
+      {
+        "path": "$HOME/.local/share/claude",
+        "when": "macos"
+      },
+      {
+        "path": "$HOME/Applications/Claude Code URL Handler.app",
+        "when": "macos"
+      }
+    ],
+    "allow_file": [
+      "$HOME/.claude.json",
+      "$HOME/.claude.json.lock",
+      "$HOME/.claude.lock"
+    ],
+    "unix_socket_dir_bind": [
+      {
+        "path": "$XDG_RUNTIME_DIR/cc-socks",
+        "when": "linux"
+      }
+    ]
+  },
+  "network": {
+    "block": false
+  },
+  "workdir": {
+    "access": "readwrite"
+  },
+  "session_hooks": {
+    "before": {
+      "script": "$PACK_DIR/bin/ensure-dirs.sh",
+      "timeout_secs": 10
+    }
+  },
+  "open_urls": {
+    "allow_origins": [
+      "https://claude.ai",
+      "https://claude.com",
+      "https://api.anthropic.com",
+      "https://platform.claude.com"
+    ],
+    "allow_localhost": true
+  },
+  "diagnostics": {
+    "suppress_system_services": [
+      "forbidden-exec-sugid"
+    ]
+  },
+  "allow_launch_services": true,
+  "rollback": {
+    "exclude_patterns": [
+      "node_modules",
+      ".next",
+      "__pycache__",
+      "target"
+    ],
+    "exclude_globs": [
+      "*.tmp.[0-9]*.[0-9a-f]*"
+    ]
+  }
+}
