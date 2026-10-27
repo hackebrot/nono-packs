@@ -77,7 +77,10 @@
     ]
   },
   "network": {
-    "block": false
+    "network_profile": "claude-code",
+    "allow_domain": [
+      "downloads.claude.ai"
+    ]
   },
   "workdir": {
     "access": "readwrite"
