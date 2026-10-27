@@ -138,7 +138,8 @@
         }
       ],
       "api_hosts": [
-        "https://api.anthropic.com"
+        "https://api.anthropic.com",
+        "https://platform.claude.com"
       ],
       "helpers": {
         "status": [
