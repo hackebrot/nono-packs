@@ -15,11 +15,13 @@ sandboxed OAuth login, based on the `claude` profile from
   `downloads.claude.ai`, since OAuth capture turns on host filtering.
 
 Without keychain access, Claude Code stores its login in
-`~/.claude/.credentials.json`. With OAuth capture, that file only ever holds
-placeholder tokens, and nono adds the real ones to requests to Anthropic. Run
-`/login` inside the sandbox on first use. Profiles without OAuth capture,
-including `nolabs-ai/claude`, can't use that login and need their own
-`/login`.
+`~/.claude/.credentials.json`. OAuth capture replaces the tokens from login
+and refresh with placeholders, and nono adds the real ones to requests to
+Anthropic. It doesn't change a file that already holds a real token: if one
+exists from a login without capture, run `/logout` first. Then run `/login`
+inside the sandbox. Profiles without OAuth capture, including
+`nolabs-ai/claude`, can't use that login; if you log in with one of them,
+`/logout` again before returning to this profile.
 
 ## Usage
 
