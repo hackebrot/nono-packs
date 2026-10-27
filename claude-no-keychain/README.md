@@ -10,6 +10,11 @@ sandboxed OAuth login, based on the `claude` profile from
   required `deny_keychains_macos` group applies.
 - The `claude_code_macos` group is replaced by its two non-keychain read
   paths: `~/.local/share/claude` and the Claude Code URL Handler app.
+- The `user_caches_macos` group is replaced by Claude Code's own cache
+  directory, to guard against cache poisoning: the sandbox can't write to
+  caches that other apps on the host read and trust. `bin/ensure-dirs.sh`
+  creates the directory if it's missing; the grant applies from the next
+  session.
 - Claude Code's login runs through nono's [sandboxed OAuth login].
 - Network access is limited to the `claude-code` network profile plus
   `downloads.claude.ai`, since OAuth capture turns on host filtering.
@@ -37,8 +42,8 @@ nono run --profile hackebrot/claude-no-keychain --allow-cwd -- claude
 ## License
 
 `policy.json` and `bin/ensure-dirs.sh` are from [nolabs-ai/nono-packs]
-(Apache-2.0). `policy.json` is modified as described above; its OAuth capture
-configuration is adapted from nono's documentation (Apache-2.0).
+(Apache-2.0) and modified as described above; the OAuth capture configuration
+in `policy.json` is adapted from nono's documentation (Apache-2.0).
 
 [nolabs-ai/nono-packs]: https://github.com/nolabs-ai/nono-packs/tree/0735dcd67de4d87223e76095e07ffd5b43e9149a/claude
 [sandboxed OAuth login]: https://nono.sh/docs/cli/features/sandboxed-oauth-logins
