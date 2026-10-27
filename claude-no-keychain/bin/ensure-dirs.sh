@@ -15,3 +15,10 @@ mkdir -p \
 if [ -n "${XDG_RUNTIME_DIR:-}" ]; then
   mkdir -m 700 -p "$XDG_RUNTIME_DIR/cc-socks"
 fi
+
+# Claude Code's MCP logs on macOS. nono skips directory grants for missing
+# paths on every platform, and without user_caches_macos the sandbox can't
+# create this under ~/Library/Caches itself.
+if [ "$(uname -s)" = "Darwin" ]; then
+  mkdir -p "$HOME/Library/Caches/claude-cli-nodejs"
+fi
