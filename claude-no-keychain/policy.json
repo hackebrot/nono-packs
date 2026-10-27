@@ -13,10 +13,6 @@
         "when": "linux"
       },
       {
-        "name": "user_caches_macos",
-        "when": "macos"
-      },
-      {
         "name": "claude_cache_linux",
         "when": "linux"
       },
@@ -50,7 +46,11 @@
       "$HOME/.local/state/claude/locks",
       "$HOME/.cache/claude",
       "$NONO_CONFIG/profile-drafts",
-      "/tmp/claude-$UID"
+      "/tmp/claude-$UID",
+      {
+        "path": "$HOME/Library/Caches/claude-cli-nodejs",
+        "when": "macos"
+      }
     ],
     "read": [
       "$NONO_PACKAGES",
