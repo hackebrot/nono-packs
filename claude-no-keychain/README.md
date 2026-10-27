@@ -13,7 +13,8 @@ sandboxed OAuth login, based on the `claude` profile from
 - The `user_caches_macos` group is replaced by Claude Code's own cache
   directory, to guard against cache poisoning: the sandbox can't write to
   caches that other apps on the host read and trust. `bin/ensure-dirs.sh`
-  creates the directory before the sandbox starts.
+  creates the directory if it's missing; the grant applies from the next
+  session.
 - Claude Code's login runs through nono's [sandboxed OAuth login].
 - Network access is limited to the `claude-code` network profile plus
   `downloads.claude.ai`, since OAuth capture turns on host filtering.
