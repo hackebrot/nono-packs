@@ -10,6 +10,9 @@ sandboxed OAuth login, based on the `claude` profile from
   required `deny_keychains_macos` group applies.
 - The `claude_code_macos` group is replaced by its two non-keychain read
   paths: `~/.local/share/claude` and the Claude Code URL Handler app.
+- The `user_caches_macos` group is replaced by Claude Code's own cache
+  directory, to guard against cache poisoning: the sandbox can't write to
+  caches that other apps on the host read and trust.
 - Claude Code's login runs through nono's [sandboxed OAuth login].
 - Network access is limited to the `claude-code` network profile plus
   `downloads.claude.ai`, since OAuth capture turns on host filtering.
