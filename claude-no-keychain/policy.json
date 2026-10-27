@@ -77,7 +77,10 @@
     ]
   },
   "network": {
-    "block": false
+    "network_profile": "claude-code",
+    "allow_domain": [
+      "downloads.claude.ai"
+    ]
   },
   "workdir": {
     "access": "readwrite"
@@ -113,5 +116,58 @@
     "exclude_globs": [
       "*.tmp.[0-9]*.[0-9a-f]*"
     ]
-  }
+  },
+  "credential_providers": {
+    "claude_code": {
+      "type": "oauth_capture",
+      "token_endpoints": [
+        {
+          "host": "https://platform.claude.com",
+          "path": "/v1/oauth/token",
+          "response_fields": [
+            {
+              "path": "access_token",
+              "kind": "opaque"
+            },
+            {
+              "path": "refresh_token",
+              "kind": "opaque"
+            }
+          ],
+          "request_body": "auto",
+          "request_nonce_fields": [
+            "refresh_token"
+          ]
+        }
+      ],
+      "api_hosts": [
+        "https://api.anthropic.com",
+        "https://platform.claude.com"
+      ],
+      "helpers": {
+        "status": [
+          "claude",
+          "auth",
+          "status",
+          "--json"
+        ],
+        "login": [
+          "claude",
+          "auth",
+          "login"
+        ],
+        "logout": [
+          "claude",
+          "auth",
+          "logout"
+        ]
+      }
+    }
+  },
+  "credential_routes": [
+    {
+      "name": "claude_code_oauth",
+      "provider": "claude_code"
+    }
+  ]
 }

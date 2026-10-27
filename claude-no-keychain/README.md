@@ -1,7 +1,8 @@
 # claude-no-keychain
 
-nono profile for Claude Code without macOS keychain access, based on the
-`claude` profile from [nolabs-ai/nono-packs].
+nono profile for Claude Code without macOS keychain access and with a
+sandboxed OAuth login, based on the `claude` profile from
+[nolabs-ai/nono-packs].
 
 ## Differences from nolabs-ai/claude
 
@@ -9,13 +10,23 @@ nono profile for Claude Code without macOS keychain access, based on the
   required `deny_keychains_macos` group applies.
 - The `claude_code_macos` group is replaced by its two non-keychain read
   paths: `~/.local/share/claude` and the Claude Code URL Handler app.
+- Claude Code's login runs through nono's [sandboxed OAuth login].
+- Network access is limited to the `claude-code` network profile plus
+  `downloads.claude.ai`, since OAuth capture turns on host filtering.
 
-Claude Code stores its login in `~/.claude/.credentials.json` instead. Run
-`/login` inside the sandbox on first use.
+Without keychain access, Claude Code stores its login in
+`~/.claude/.credentials.json`. OAuth capture replaces the tokens from login
+and refresh with placeholders, and nono adds the real ones to requests to
+Anthropic. It doesn't change a file that already holds a real token: if one
+exists from a login without capture, run `/logout` first. Then run `/login`
+inside the sandbox. Profiles without OAuth capture, including
+`nolabs-ai/claude`, can't use that login; if you log in with one of them,
+`/logout` again before returning to this profile.
 
 ## Usage
 
-The nono plugin for Claude Code comes from the upstream pack, so install both:
+Requires nono 0.80.0 or later. The nono plugin for Claude Code comes from the
+upstream pack, so install both:
 
 ```sh
 nono pull nolabs-ai/claude
@@ -26,7 +37,8 @@ nono run --profile hackebrot/claude-no-keychain --allow-cwd -- claude
 ## License
 
 `policy.json` and `bin/ensure-dirs.sh` are from [nolabs-ai/nono-packs]
-(Apache-2.0). `policy.json` is modified as described above.
+(Apache-2.0). `policy.json` is modified as described above; its OAuth capture
+configuration is adapted from nono's documentation (Apache-2.0).
 
 [nolabs-ai/nono-packs]: https://github.com/nolabs-ai/nono-packs/tree/0735dcd67de4d87223e76095e07ffd5b43e9149a/claude
-
+[sandboxed OAuth login]: https://nono.sh/docs/cli/features/sandboxed-oauth-logins
