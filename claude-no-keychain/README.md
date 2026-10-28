@@ -15,6 +15,9 @@ sandboxed OAuth login, based on the `claude` profile from
   caches that other apps on the host read and trust. `bin/ensure-dirs.sh`
   creates the directory if it's missing; the grant applies from the next
   session.
+- Only an allow-list of environment variables reaches the sandbox: what
+  Claude Code needs for paths, locale and the terminal. Anything else exported
+  in your shell, like tokens, stays out.
 - Claude Code's login runs through nono's [sandboxed OAuth login].
 - Network access is limited to the `claude-code` network profile plus
   `downloads.claude.ai`, since OAuth capture turns on host filtering.
