@@ -20,14 +20,6 @@
       "rust_runtime",
       "python_runtime",
       {
-        "name": "vscode_macos",
-        "when": "macos"
-      },
-      {
-        "name": "vscode_linux",
-        "when": "linux"
-      },
-      {
         "name": "linux_sysfs_read",
         "when": "linux"
       },
