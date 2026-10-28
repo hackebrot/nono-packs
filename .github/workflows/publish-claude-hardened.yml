@@ -1,8 +1,7 @@
-# .github/workflows/publish-claude.yml
-name: Publish claude pack
+name: Publish claude-hardened pack
 on:
   push:
-    tags: ["claude-v*"]
+    tags: ["claude-hardened-v*"]
   workflow_dispatch:
 
 # OIDC identity matches this exact file path; the trusted publisher
@@ -21,9 +20,9 @@ jobs:
         id: version
         run: |
           set -euo pipefail
-          VERSION=$(jq -r '.version' claude/package.json)
+          VERSION=$(jq -r '.version' claude-hardened/package.json)
           if [ -z "$VERSION" ] || [ "$VERSION" = "null" ]; then
-            echo "ERROR: claude/package.json is missing a 'version' field"
+            echo "ERROR: claude-hardened/package.json is missing a 'version' field"
             exit 1
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
@@ -34,8 +33,8 @@ jobs:
           set -euo pipefail
           {
             echo "package.json"
-            [ -f "claude/README.md" ] && echo "README.md"
-            jq -r '.artifacts[].path' "claude/package.json"
+            [ -f "claude-hardened/README.md" ] && echo "README.md"
+            jq -r '.artifacts[].path' "claude-hardened/package.json"
           } | sort -u > /tmp/files.txt
           {
             echo "files<<EOF"
@@ -46,9 +45,9 @@ jobs:
       - uses: nolabs-ai/agent-sign@<pinned-sha>
         with:
           publish: "true"
-          package-name: claude
-          package-namespace: <your-org>
+          package-name: claude-hardened
+          package-namespace: hackebrot
           package-version: ${{ steps.version.outputs.version }}
-          package-path: claude
+          package-path: claude-hardened
           registry-url: https://registry.nono.sh/api/v1
           files: ${{ steps.files.outputs.files }}
