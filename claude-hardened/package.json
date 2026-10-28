@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "name": "claude-no-keychain",
+  "name": "claude-hardened",
   "version": "0.1.0",
-  "description": "nono profile for Claude Code without macOS keychain access, based on the nolabs-ai/claude profile.",
+  "description": "Hardened nono profile for Claude Code, based on the nolabs-ai/claude profile.",
   "license": "Apache-2.0",
   "platforms": [
     "macos"
@@ -12,7 +12,7 @@
     {
       "type": "profile",
       "path": "policy.json",
-      "install_as": "claude-no-keychain"
+      "install_as": "claude-hardened"
     },
     {
       "type": "plugin",

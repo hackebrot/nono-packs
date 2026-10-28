@@ -1,7 +1,6 @@
-# claude-no-keychain
+# claude-hardened
 
-nono profile for Claude Code without macOS keychain access and with a
-sandboxed OAuth login, based on the `claude` profile from
+Hardened nono profile for Claude Code, based on the `claude` profile from
 [nolabs-ai/nono-packs].
 
 ## Differences from nolabs-ai/claude
@@ -41,8 +40,8 @@ upstream pack, so install both:
 
 ```sh
 nono pull nolabs-ai/claude
-nono pull hackebrot/claude-no-keychain
-nono run --profile hackebrot/claude-no-keychain --allow-cwd -- claude
+nono pull hackebrot/claude-hardened
+nono run --profile hackebrot/claude-hardened --allow-cwd -- claude
 ```
 
 ## License
