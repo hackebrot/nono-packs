@@ -15,6 +15,9 @@ sandboxed OAuth login, based on the `claude` profile from
   caches that other apps on the host read and trust. `bin/ensure-dirs.sh`
   creates the directory if it's missing; the grant applies from the next
   session.
+- The `vscode_macos` and `vscode_linux` groups are removed: VS Code runs its
+  extensions and settings on the host, so the sandbox can't change them.
+  Claude Code's VS Code integration isn't supported.
 - Only an allow-list of environment variables reaches the sandbox: what
   Claude Code needs for paths, locale and the terminal. Anything else exported
   in your shell, like tokens, stays out.
