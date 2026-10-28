@@ -1,9 +1,9 @@
 {
   "extends": "default",
   "meta": {
-    "name": "claude-no-keychain",
+    "name": "claude-hardened",
     "version": "0.1.0",
-    "description": "Claude Code CLI agent (no macOS keychain access)",
+    "description": "Claude Code CLI agent (hardened)",
     "author": "hackebrot"
   },
   "groups": {
