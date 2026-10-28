@@ -1,0 +1,54 @@
+# .github/workflows/publish-claude.yml
+name: Publish claude pack
+on:
+  push:
+    tags: ["claude-v*"]
+  workflow_dispatch:
+
+# OIDC identity matches this exact file path; the trusted publisher
+# entry is pinned to the same.
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read version from package.json
+        id: version
+        run: |
+          set -euo pipefail
+          VERSION=$(jq -r '.version' claude/package.json)
+          if [ -z "$VERSION" ] || [ "$VERSION" = "null" ]; then
+            echo "ERROR: claude/package.json is missing a 'version' field"
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build files list from package.json
+        id: files
+        run: |
+          set -euo pipefail
+          {
+            echo "package.json"
+            [ -f "claude/README.md" ] && echo "README.md"
+            jq -r '.artifacts[].path' "claude/package.json"
+          } | sort -u > /tmp/files.txt
+          {
+            echo "files<<EOF"
+            cat /tmp/files.txt
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: nolabs-ai/agent-sign@<pinned-sha>
+        with:
+          publish: "true"
+          package-name: claude
+          package-namespace: <your-org>
+          package-version: ${{ steps.version.outputs.version }}
+          package-path: claude
+          registry-url: https://registry.nono.sh/api/v1
+          files: ${{ steps.files.outputs.files }}
