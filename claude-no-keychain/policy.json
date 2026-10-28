@@ -169,5 +169,22 @@
       "name": "claude_code_oauth",
       "provider": "claude_code"
     }
-  ]
+  ],
+  "environment": {
+    "allow_vars": [
+      "COLORTERM",
+      "HOME",
+      "LANG",
+      "LC_ALL",
+      "LOGNAME",
+      "PATH",
+      "SHELL",
+      "TERM",
+      "TERM_PROGRAM",
+      "TERM_PROGRAM_VERSION",
+      "TMPDIR",
+      "USER",
+      "__CF_USER_TEXT_ENCODING"
+    ]
+  }
 }
