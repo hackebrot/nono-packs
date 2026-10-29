@@ -1,7 +1,8 @@
 # Based on the multi-pack monorepo example in nono's Publishing Packs docs
 # (Apache-2.0): https://nono.sh/docs/cli/features/package-publishing
-# Modified: pack name and paths, pinned actions and nono version, and no
-# persisted checkout credentials.
+# Modified: pack name and paths, pinned actions and nono version, no
+# persisted checkout credentials, and a check that the tag matches the
+# package.json version.
 name: Publish claude-hardened pack
 on:
   push:
@@ -32,6 +33,18 @@ jobs:
             exit 1
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check tag matches package.json version
+        env:
+          REF_NAME: ${{ github.ref_name }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          EXPECTED="claude-hardened-v${VERSION}"
+          if [ "$REF_NAME" != "$EXPECTED" ]; then
+            echo "ERROR: ref '$REF_NAME' does not match package.json version (expected '$EXPECTED')"
+            exit 1
+          fi
 
       - name: Build files list from package.json
         id: files
