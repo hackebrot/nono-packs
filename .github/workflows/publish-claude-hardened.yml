@@ -14,7 +14,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Read version from package.json
         id: version
@@ -42,12 +44,13 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
-      - uses: nolabs-ai/agent-sign@<pinned-sha>
+      - uses: nolabs-ai/agent-sign@a3641a5e9f14fdfc7d12bacec63d5f56f4fa1749 # v0.1.0
         with:
           publish: "true"
           package-name: claude-hardened
           package-namespace: hackebrot
           package-version: ${{ steps.version.outputs.version }}
           package-path: claude-hardened
+          nono-version: v0.80.0
           registry-url: https://registry.nono.sh/api/v1
           files: ${{ steps.files.outputs.files }}
