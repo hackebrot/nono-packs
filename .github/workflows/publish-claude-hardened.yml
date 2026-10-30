@@ -1,16 +1,16 @@
 # Based on the multi-pack monorepo example in nono's Publishing Packs docs
 # (Apache-2.0): https://nono.sh/docs/cli/features/package-publishing
 # Modified: pack name and paths, pinned actions and nono version, no
-# persisted checkout credentials, and a check that the tag matches the
-# package.json version.
+# persisted checkout credentials, a check that the tag matches the
+# package.json version, and a GitHub environment for publishing.
 name: Publish claude-hardened pack
 on:
   push:
     tags: ["claude-hardened-v*"]
   workflow_dispatch:
 
-# OIDC identity matches this exact file path; the trusted publisher
-# entry is pinned to the same.
+# OIDC identity matches this exact file path and environment; the trusted
+# publisher entry is pinned to the same.
 permissions:
   id-token: write
   contents: read
@@ -18,6 +18,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: nono-registry
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
