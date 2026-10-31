@@ -35,7 +35,7 @@ inside the sandbox. Profiles without OAuth capture, including
 
 ## Usage
 
-Requires nono 0.80.0 or later. The nono plugin for Claude Code comes from the
+Requires nono 0.81.0 or later. The nono plugin for Claude Code comes from the
 upstream pack, so install both:
 
 ```sh

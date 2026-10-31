@@ -69,6 +69,6 @@ jobs:
           package-namespace: hackebrot
           package-version: ${{ steps.version.outputs.version }}
           package-path: claude-hardened
-          nono-version: v0.80.0
+          nono-version: v0.81.0
           registry-url: https://registry.nono.sh/api/v1
           files: ${{ steps.files.outputs.files }}
