@@ -46,9 +46,14 @@ nono run --profile hackebrot/claude-hardened --allow-cwd -- claude
 
 ## License
 
+## License
+
+Apache License 2.0. See [LICENSE].
+
 `policy.json` and `bin/ensure-dirs.sh` are from [nolabs-ai/nono-packs]
 (Apache-2.0) and modified as described above; the OAuth capture configuration
 in `policy.json` is adapted from nono's documentation (Apache-2.0).
 
 [nolabs-ai/nono-packs]: https://github.com/nolabs-ai/nono-packs/tree/0735dcd67de4d87223e76095e07ffd5b43e9149a/claude
 [sandboxed OAuth login]: https://nono.sh/docs/cli/features/sandboxed-oauth-logins
+[LICENSE]: LICENSE
